@@ -16,13 +16,16 @@ public class TestRunner implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        AttendanceRecord r = new AttendanceRecord();
-        r.setStudentId("S12345");
-        r.setCourseCode("CSCI335");
-        r.setTimestamp(LocalDateTime.now());
-        r.setPresent(true);
-        repo.save(r);
-        System.out.println("Inserted rows: " + repo.count());
+        if (repo.count() == 0) {
+            AttendanceRecord r = new AttendanceRecord();
+            r.setStudentId("S12345");
+            r.setCourseCode("CSCI335");
+            r.setTimestamp(LocalDateTime.now());
+            r.setPresent(true);
+            repo.save(r);
+            System.out.println("Inserted seed row");
+        } else {
+            System.out.println("Seed skipped. Rows already present: " + repo.count());
+        }
     }
-
 }
